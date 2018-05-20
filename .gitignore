@@ -7,6 +7,9 @@
 # Compiled class file
 *.class
 
+# Target folder generated after build
+target
+
 # Log file
 *.log
 
