@@ -1,5 +1,6 @@
 package com.musicrecommendation.service;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ public class RecommendationService {
     private TemperatureService temperatureService;
 
     public Collection<String> findRecommendationsByCity(String city) {
-        String temperature = temperatureService.findTemperatureByCity(city);
+        BigDecimal temperature = temperatureService.findTemperatureByCity(city);
+
+        System.out.println(temperature);
 
         return Collections.emptyList();
     }

@@ -1,8 +1,9 @@
 package com.musicrecommendation.service;
 
 import com.musicrecommendation.config.TemperatureApiConfig;
+import com.musicrecommendation.model.TemperatureContainerDto;
+import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,11 +16,12 @@ public class TemperatureService {
     @Autowired
     private TemperatureApiConfig temperatureApiConfig;
 
-    public String findTemperatureByCity(String city) {
+    public BigDecimal findTemperatureByCity(String city) {
         String url = temperatureApiConfig.getBaseURL().concat("&q={city}");
 
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class, city);
+        final TemperatureContainerDto containerDto = restTemplate
+            .getForObject(url, TemperatureContainerDto.class, city);
 
-        return responseEntity.getBody();
+        return containerDto.getMain().getTemp();
     }
 }
