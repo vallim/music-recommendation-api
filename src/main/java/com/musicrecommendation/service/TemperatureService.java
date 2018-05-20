@@ -24,4 +24,13 @@ public class TemperatureService {
 
         return containerDto.getMain().getTemp();
     }
+
+    public BigDecimal findTemperatureByLatLong(String lat, String lon) {
+        String url = temperatureApiConfig.getBaseURL().concat("&lat={lat}&lon={lon}");
+
+        TemperatureContainerDto containerDto = restTemplate
+            .getForObject(url, TemperatureContainerDto.class, lat, lon);
+
+        return containerDto.getMain().getTemp();
+    }
 }

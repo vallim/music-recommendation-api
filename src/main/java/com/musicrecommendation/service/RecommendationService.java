@@ -21,6 +21,8 @@ public class RecommendationService {
     }
 
     public Collection<String> findRecommendationsByLatLong(String lat, String lon) {
+        BigDecimal temperatureByLatLong = temperatureService.findTemperatureByLatLong(lat, lon);
+
         return Collections.emptyList();
     }
 }
