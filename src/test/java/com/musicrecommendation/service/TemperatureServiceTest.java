@@ -3,6 +3,7 @@ package com.musicrecommendation.service;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static org.junit.Assert.assertTrue;
 
@@ -41,6 +42,22 @@ public class TemperatureServiceTest {
                 .withBody("{\"main\":{\"temp\":\"25\"}}")));
 
         BigDecimal response = temperatureService.findTemperatureByCity(city);
+
+        assertTrue(_25_DEGREES_CELSIUS.compareTo(response) == 0);
+    }
+
+    @Test
+    public void shouldReturnATemperatureGivenALatLong() {
+        String lat = "10";
+        String lon = "30";
+
+        stubFor(get(urlEqualTo("/&lat=".concat(lat).concat("&lon=").concat(lon)))
+            .willReturn(aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "application/json")
+                .withBody("{\"main\":{\"temp\":\"25\"}}")));
+
+        BigDecimal response = temperatureService.findTemperatureByLatLong(lat, lon);
 
         assertTrue(_25_DEGREES_CELSIUS.compareTo(response) == 0);
     }
