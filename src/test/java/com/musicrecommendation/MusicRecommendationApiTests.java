@@ -1,4 +1,4 @@
-package com.musicrecommendation.musicrecommendationapi;
+package com.musicrecommendation;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
