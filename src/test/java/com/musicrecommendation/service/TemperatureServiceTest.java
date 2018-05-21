@@ -1,12 +1,13 @@
 package com.musicrecommendation.service;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static org.junit.Assert.assertTrue;
 
+import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ public class TemperatureServiceTest {
 
     @ClassRule
     public static WireMockRule wireMockRule = new WireMockRule(
-        WireMockConfiguration.wireMockConfig().port(8089));
+        WireMockConfiguration.wireMockConfig().port(8089).notifier(new ConsoleNotifier(true)));
 
     @Autowired
     private TemperatureService temperatureService;
@@ -35,7 +36,8 @@ public class TemperatureServiceTest {
     public void shouldReturnATemperatureGivenACity() {
         String city = "Campinas";
 
-        stubFor(get(urlPathEqualTo("/&q=".concat(city)))
+        stubFor(get(urlPathEqualTo("/"))
+            .withQueryParam("q", equalTo(city))
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "application/json")
@@ -51,7 +53,9 @@ public class TemperatureServiceTest {
         String lat = "10";
         String lon = "30";
 
-        stubFor(get(urlEqualTo("/&lat=".concat(lat).concat("&lon=").concat(lon)))
+        stubFor(get(urlPathEqualTo("/"))
+            .withQueryParam("lat", equalTo(lat))
+            .withQueryParam("lon", equalTo(lon))
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "application/json")

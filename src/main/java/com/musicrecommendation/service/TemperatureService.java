@@ -17,7 +17,8 @@ public class TemperatureService {
     private TemperatureApiConfig temperatureApiConfig;
 
     public BigDecimal findTemperatureByCity(String city) {
-        String url = temperatureApiConfig.getBaseURL().concat("&q={city}");
+        String url = temperatureApiConfig.getBaseURL().concat("?q={city}")
+            .concat(temperatureApiConfig.getDefaultQueryParams());
 
         final TemperatureContainerDto containerDto = restTemplate
             .getForObject(url, TemperatureContainerDto.class, city);
@@ -26,7 +27,8 @@ public class TemperatureService {
     }
 
     public BigDecimal findTemperatureByLatLong(String lat, String lon) {
-        String url = temperatureApiConfig.getBaseURL().concat("&lat={lat}&lon={lon}");
+        String url = temperatureApiConfig.getBaseURL().concat("?lat={lat}&lon={lon}")
+            .concat(temperatureApiConfig.getDefaultQueryParams());
 
         TemperatureContainerDto containerDto = restTemplate
             .getForObject(url, TemperatureContainerDto.class, lat, lon);

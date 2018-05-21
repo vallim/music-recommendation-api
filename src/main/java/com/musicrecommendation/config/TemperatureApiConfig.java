@@ -7,12 +7,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties
+@ConfigurationProperties(prefix = "temperature.api")
 @Setter
 @Getter
 public class TemperatureApiConfig {
 
-    @Value("${temperature.api.baseURL}")
     private String baseURL;
+    private String defaultQueryParams;
 
 }
