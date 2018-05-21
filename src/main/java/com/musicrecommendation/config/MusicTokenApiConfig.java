@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "music.token")
 @Getter
 @Setter
-public class MusicTokenConfig {
+public class MusicTokenApiConfig {
 
     private String baseURL;
     private String clientID;

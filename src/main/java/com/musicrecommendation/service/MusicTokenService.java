@@ -1,6 +1,6 @@
 package com.musicrecommendation.service;
 
-import com.musicrecommendation.config.MusicTokenConfig;
+import com.musicrecommendation.config.MusicTokenApiConfig;
 import com.musicrecommendation.model.MusicTokenDto;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class MusicTokenService {
     private RestTemplate restTemplate;
 
     @Autowired
-    private MusicTokenConfig musicTokenConfig;
+    private MusicTokenApiConfig musicTokenApiConfig;
 
     public String getAccessToken() {
 
@@ -30,7 +30,7 @@ public class MusicTokenService {
             headers());
 
         final MusicTokenDto tokenDto = restTemplate
-            .postForObject(musicTokenConfig.getBaseURL(), httpEntity, MusicTokenDto.class);
+            .postForObject(musicTokenApiConfig.getBaseURL(), httpEntity, MusicTokenDto.class);
 
         return tokenDto.getAccessToken();
     }
@@ -44,8 +44,8 @@ public class MusicTokenService {
     }
 
     private String getAuthorization() {
-        final String authorizationKey = musicTokenConfig.getClientID().concat(":")
-            .concat(musicTokenConfig.getClientSecret());
+        final String authorizationKey = musicTokenApiConfig.getClientID().concat(":")
+            .concat(musicTokenApiConfig.getClientSecret());
 
         return "Basic ".concat(Base64.getEncoder().encodeToString(authorizationKey.getBytes()));
     }
