@@ -5,15 +5,21 @@ import java.util.Arrays;
 
 public enum MusicCategoryEnum {
 
-    PARTY(new PartyCategory()),
-    POP(new PopCategory()),
-    ROCK(new RockCategory()),
-    CLASSICAL(new ClassicalCategory());
+    PARTY("party", new PartyCategory()),
+    POP("pop", new PopCategory()),
+    ROCK("rock", new RockCategory()),
+    CLASSICAL("classical", new ClassicalCategory());
 
+    private final String value;
     private final MusicCategoryRule musicCategoryRule;
 
-    MusicCategoryEnum(MusicCategoryRule musicCategoryRule) {
+    MusicCategoryEnum(String value, MusicCategoryRule musicCategoryRule) {
+        this.value = value;
         this.musicCategoryRule = musicCategoryRule;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static MusicCategoryEnum find(BigDecimal temperature) {
