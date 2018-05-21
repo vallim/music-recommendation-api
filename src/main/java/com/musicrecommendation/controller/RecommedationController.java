@@ -1,6 +1,7 @@
 package com.musicrecommendation.controller;
 
 import com.musicrecommendation.service.RecommendationService;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -22,12 +23,16 @@ public class RecommedationController {
         @RequestParam(name = "lat", required = false) String lat,
         @RequestParam(name = "long", required = false) String lon) {
 
+        Collection<String> recommendations;
+
         if (!StringUtils.isEmpty(city)) {
-            recommendationService.findRecommendationsByCity(city);
+            recommendations = recommendationService.findRecommendationsByCity(city);
         } else if (!StringUtils.isEmpty(lat) && !StringUtils.isEmpty(lat)) {
-            recommendationService.findRecommendationsByLatLong(lat, lon);
+            recommendations = recommendationService.findRecommendationsByLatLong(lat, lon);
+        } else {
+            throw new IllegalArgumentException("It is required to send city or latitude/longitude to get recommendations");
         }
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(recommendations);
     }
 }
