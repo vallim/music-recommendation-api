@@ -1,5 +1,6 @@
 package com.musicrecommendation;
 
+import com.musicrecommendation.config.ApiTimeoutConfig;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -23,9 +25,18 @@ public class MusicRecommendationApi {
 	@Autowired
 	private RetryTemplateConfig retryTemplateConfig;
 
+	@Autowired
+	private ApiTimeoutConfig apiTimeoutConfig;
+
 	@Bean
 	public RestTemplate restTemplate() {
-		return new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
+		SimpleClientHttpRequestFactory requestFactory = (SimpleClientHttpRequestFactory) restTemplate
+			.getRequestFactory();
+		requestFactory.setConnectTimeout(apiTimeoutConfig.getTimeout());
+		requestFactory.setReadTimeout(apiTimeoutConfig.getTimeout());
+
+		return restTemplate;
 	}
 
 	@Bean
