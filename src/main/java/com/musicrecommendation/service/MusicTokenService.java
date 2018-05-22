@@ -4,6 +4,7 @@ import com.musicrecommendation.config.MusicTokenApiConfig;
 import com.musicrecommendation.model.MusicTokenDto;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,6 +26,7 @@ public class MusicTokenService {
     @Autowired
     private RetryTemplate retryTemplate;
 
+    @Cacheable(value = "musicAccessToken")
     public String getAccessToken() {
 
         final MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();

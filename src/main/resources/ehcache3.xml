@@ -1,0 +1,11 @@
+<config xmlns='http://www.ehcache.org/v3'
+  xmlns:jsr107='http://www.ehcache.org/v3/jsr107'>
+
+  <cache alias="musicAccessToken">
+    <expiry>
+      <ttl unit="minutes">55</ttl>
+    </expiry>
+    <heap unit="entries">1</heap>
+    <jsr107:mbeans enable-statistics="true"/>
+  </cache>
+</config>
