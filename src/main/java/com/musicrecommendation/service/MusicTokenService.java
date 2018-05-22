@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -21,6 +22,9 @@ public class MusicTokenService {
     @Autowired
     private MusicTokenApiConfig musicTokenApiConfig;
 
+    @Autowired
+    private RetryTemplate retryTemplate;
+
     public String getAccessToken() {
 
         final MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
@@ -29,8 +33,9 @@ public class MusicTokenService {
         final HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(multiValueMap,
             headers());
 
-        final MusicTokenDto tokenDto = restTemplate
-            .postForObject(musicTokenApiConfig.getBaseURL(), httpEntity, MusicTokenDto.class);
+        final MusicTokenDto tokenDto = retryTemplate.execute(
+            retryContext -> restTemplate
+            .postForObject(musicTokenApiConfig.getBaseURL(), httpEntity, MusicTokenDto.class));
 
         return tokenDto.getAccessToken();
     }
