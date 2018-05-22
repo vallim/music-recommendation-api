@@ -64,4 +64,10 @@ public class RecommedationControllerTest {
 
         verify(recommendationService, times(1)).findRecommendationsByLatLong(lat, lon);
     }
+
+    @Test
+    public void shouldNotFindRecommendationsIfNotSendCityOrLatLong() throws Exception {
+
+        mockMvc.perform(get(BASE_URL)).andExpect(status().isBadRequest());
+    }
 }
