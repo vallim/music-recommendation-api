@@ -1,6 +1,7 @@
 package com.musicrecommendation;
 
 import com.musicrecommendation.config.ApiTimeoutConfig;
+import com.musicrecommendation.config.RetryTemplateConfig;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;

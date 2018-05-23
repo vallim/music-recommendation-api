@@ -1,4 +1,4 @@
-package com.musicrecommendation;
+package com.musicrecommendation.config;
 
 import lombok.Getter;
 import lombok.Setter;
