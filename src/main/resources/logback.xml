@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property name="LOG_PATH" value="/tmp/logs"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %X{X-B3-TraceId:-} %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="SAVE-TO-FILE" class="ch.qos.logback.core.FileAppender">
+    <file>${LOG_PATH}/log.log</file>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [%X{X-B3-TraceId:-}] %-5level %logger{36}.%M - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="SAVE-TO-FILE" />
+  </root>
+</configuration>
