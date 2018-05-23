@@ -2,7 +2,9 @@ package com.musicrecommendation;
 
 import com.musicrecommendation.config.ApiTimeoutConfig;
 import com.musicrecommendation.config.RetryTemplateConfig;
+import com.musicrecommendation.interceptor.RestTemplateLoggingInterceptor;
 import java.net.SocketTimeoutException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class MusicRecommendationApi {
 			.getRequestFactory();
 		requestFactory.setConnectTimeout(apiTimeoutConfig.getTimeout());
 		requestFactory.setReadTimeout(apiTimeoutConfig.getTimeout());
+
+        restTemplate.setInterceptors(Collections.singletonList(new RestTemplateLoggingInterceptor()));
 
 		return restTemplate;
 	}
