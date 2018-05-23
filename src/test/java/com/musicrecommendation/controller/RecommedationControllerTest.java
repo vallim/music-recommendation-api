@@ -8,7 +8,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.musicrecommendation.RetryTemplateConfig;
+import com.musicrecommendation.config.ApiTimeoutConfig;
+import com.musicrecommendation.config.RetryTemplateConfig;
 import com.musicrecommendation.service.RecommendationService;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest({RetryTemplateConfig.class, RecommedationController.class})
+@WebMvcTest({ApiTimeoutConfig.class, RetryTemplateConfig.class, RecommedationController.class})
 public class RecommedationControllerTest {
 
     private static final String BASE_URL = "/recommendations";
