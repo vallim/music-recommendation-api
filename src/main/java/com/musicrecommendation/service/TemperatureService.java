@@ -4,6 +4,7 @@ import com.musicrecommendation.config.TemperatureApiConfig;
 import com.musicrecommendation.model.TemperatureContainerDto;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +21,7 @@ public class TemperatureService {
     @Autowired
     private RetryTemplate retryTemplate;
 
+    @Cacheable("temperatureByCity")
     public BigDecimal findTemperatureByCity(String city) {
         String url = temperatureApiConfig.getBaseURL().concat("?q={city}")
             .concat(temperatureApiConfig.getDefaultQueryParams());
@@ -31,6 +33,7 @@ public class TemperatureService {
         return containerDto.getMain().getTemp();
     }
 
+    @Cacheable("temperatureByLatLong")
     public BigDecimal findTemperatureByLatLong(String lat, String lon) {
         String url = temperatureApiConfig.getBaseURL().concat("?lat={lat}&lon={lon}")
             .concat(temperatureApiConfig.getDefaultQueryParams());

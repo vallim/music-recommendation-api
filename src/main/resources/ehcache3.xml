@@ -8,4 +8,17 @@
     <heap unit="entries">1</heap>
     <jsr107:mbeans enable-statistics="true"/>
   </cache>
+
+  <cache alias="temperatureByCity" uses-template="temperature">
+  </cache>
+
+  <cache alias="temperatureByLatLong" uses-template="temperature">
+  </cache>
+
+  <cache-template name="temperature">
+    <expiry>
+      <ttl unit="hours">1</ttl>
+    </expiry>
+    <heap unit="entries">10000</heap>
+  </cache-template>
 </config>
